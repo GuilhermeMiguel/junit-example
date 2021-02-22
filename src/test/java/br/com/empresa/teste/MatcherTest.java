@@ -1,20 +1,67 @@
 package br.com.empresa.teste;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.hamcrest.Matchers;
 import org.hamcrest.beans.HasProperty;
 import org.hamcrest.object.HasToString;
 import org.junit.Test;
 
+import br.com.empresa.teste.matcher.NumeroMaiorMatcher;
+
 public class MatcherTest {
 
+	 /*
+  	
+  		O hamcrest faz testes com expressoes mais legiveis, ele nos proporciona Matchers que fazem testes em objetos 
+  	
+  			Um exemplo bem simples de melhora na escrita:
+  			
+	  */
+	
+	
+	@Test
+	public void ehAnoBissexto() {
+		var ehAnoBis = new CalculadoraCalendario();
+		boolean isBissexto = ehAnoBis.ehAnoBissexto(LocalDate.now().getYear());
+		
+		//Modo Normal de escrita
+		assertEquals(isBissexto, false);
+		
+		
+		assertFalse(isBissexto);
+		
+		//Com Hamcrest 
+		assertThat(isBissexto, is(isBissexto));
+
+		assertThat(isBissexto, equalTo(isBissexto));
+	}
+	
+	
 	/*
-	  		Matchers fazem testes em objetos 
+	  		UTILIZANDO O MEU MATCHER
+	  	Se o numero passado é maior que o numero do ano atual
 	*/
+	
+	@Test
+	public void utilizaMeuMatcher() {
+		Integer primeiroAno = LocalDate.now().getYear();
+		
+		//numero gerado entre 2000 e 2100
+		Integer anoGerado = new Random().nextInt(101) + 2000;
+		
+		assertThat(primeiroAno, NumeroMaiorMatcher.ehAnoMaiorMatcher(anoGerado));
+	}
+	
 	
 	
 	/**
@@ -24,6 +71,9 @@ public class MatcherTest {
 	public void verificaToString(){
 	    var func = new Funcionario("Pedro", "Pedra");
 	    String funcStr = func.toString();
+	    
+	   
+	    
 	    assertThat(funcStr, HasToString.hasToString(funcStr));
 	}
 	

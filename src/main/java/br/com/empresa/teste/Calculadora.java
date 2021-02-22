@@ -11,4 +11,11 @@ public class Calculadora {
 		
 		return mult;
 	}
+	
+	
+	
+	public Double dividir(Double num1, Double num2) {
+			
+		return num1 / num2;
+	}
 }
